@@ -14,3 +14,19 @@ export class AuthorizationHeader {
         this.Authorization = `Bearer ${jwt}`
     }
 }
+
+export interface NameDetails {
+    first: string;
+    last: string;
+}
+
+export type User = {
+    name: NameDetails;
+    email: string;
+    iat: number;
+    exp: number;
+}
+
+export type UserProps = {
+    user: User;
+}

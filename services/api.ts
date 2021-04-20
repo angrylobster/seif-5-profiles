@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, Method } from 'axios'
-import { getReasonPhrase } from 'http-status-codes';
-import { HttpBackendError, HttpResponse } from '../interfaces/http'
+import { getReasonPhrase, StatusCodes } from 'http-status-codes';
+import { HttpBackendError } from '../interfaces/http'
 
 class ApiService {
     private readonly client: AxiosInstance;
@@ -9,11 +9,11 @@ class ApiService {
         this.client = axios.create(config)
     }
 
-    get <T> (path: string, options?: Partial<AxiosRequestConfig>): Promise<HttpResponse<T>> {
+    get <T> (path: string, options?: Partial<AxiosRequestConfig>): Promise<T> {
         return this.executeHttpCall<T>('get', path, options)
     }
 
-    post <T> (path: string, options: Partial<AxiosRequestConfig>): Promise<HttpResponse<T>> {
+    post <T> (path: string, options?: Partial<AxiosRequestConfig>): Promise<T> {
         return this.executeHttpCall<T>('post', path, options)
     }
 
@@ -21,13 +21,14 @@ class ApiService {
         method: Method,
         url: string,
         options?: Partial<AxiosRequestConfig>
-    ): Promise<HttpResponse<T>> {
+    ): Promise<T> {
         try {
             const response = await this.client.request({
                 url,
                 method,
                 ...options,
             } as AxiosRequestConfig)
+            if (!response) throw new HttpBackendError(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND), 'Could not retrieve a response')
             return response.data
         } catch (err) {
             const { response: { status, data } } = err as AxiosError

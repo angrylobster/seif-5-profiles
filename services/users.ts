@@ -3,15 +3,7 @@ import { backendApiService } from "./api";
 
 class UsersService {
     login (email: string, password: string): Promise<HttpResponse<string>> {
-        return backendApiService.post<string>(
-            'auth/login', 
-            {
-                data: {
-                    email,
-                    password,
-                },
-            },
-        );
+        return backendApiService.post<HttpResponse<string>>('auth/login', { data: { email, password } });
     }
 }
 

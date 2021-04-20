@@ -16,4 +16,17 @@ export const setJwtCookie = (
     } as CookieSerializeOptions);
     res.setHeader('Set-Cookie', jwtCookie);
 }
-  
+
+export const expireJwtCookie = (res: NextApiResponse): void => {
+    res.setHeader(
+        'Set-Cookie',
+        serialize(
+            'jwt',
+            'deleted',
+            {
+                path: '/',
+                expires: new Date(0),
+            }
+        )
+    );
+}

@@ -1,8 +1,9 @@
 import { parse } from 'cookie'
-import { GetServerSideProps, GetServerSidePropsContext, NextApiResponse } from 'next'
+import { GetServerSidePropsContext, GetServerSidePropsResult, NextApiResponse } from 'next'
 import { HttpBackendError } from '../interfaces/http'
 import { ServerResponse } from 'http'
 import { getReasonPhrase } from 'http-status-codes'
+import jwtDecode from 'jwt-decode'
 
 export const formatHttpResponse = (res: NextApiResponse, status: number, body: unknown): void => {
     res.status(status)
@@ -18,15 +19,16 @@ export const formatErrorResponse = (res: NextApiResponse, err: Error): void => {
 }
 
 export const sendRedirect = (res: ServerResponse, location: string): void => {
-    res.writeHead(302, {
-        Location: location,
-    }).end();
+    res.writeHead(302, { Location: location }).end();
 }
 
-export const checkAuthOrRedirect = (): GetServerSideProps => {
-    return async (context: GetServerSidePropsContext) => {
+export function redirectAuth (callback?: (context: GetServerSidePropsContext) => GetServerSidePropsResult<unknown>) {
+    return async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<unknown>> => {
         const cookies = context?.req?.headers?.cookie && parse(context.req.headers.cookie)
-        if (!cookies || !cookies.jwt) sendRedirect(context.res, '/')
-        return { props: {} }
+        if (cookies && cookies['jwt']) {
+            const user = jwtDecode(cookies['jwt']) as { email: string }
+            if (user.email) sendRedirect(context.res, 'profile')
+        }
+        return callback ? callback(context) : { props: {} }
     }
 }

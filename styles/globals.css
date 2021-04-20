@@ -14,3 +14,35 @@ a {
 * {
   box-sizing: border-box;
 }
+
+
+
+.header-right {
+  text-align: right;
+}
+
+.homeworkCompletionTableHeader {
+  font-size: small;
+  text-align: center !important;
+}
+
+.welcome-text {
+  color: white;
+  margin-bottom: 0;
+}
+
+.ant-typography .completion-green {
+  color: green;
+}
+
+.ant-typography .completion-yellow {
+  color: yellow;
+}
+
+.ant-typography .completion-red {
+  color: red;
+}
+
+.reset-password {
+  color: red;
+}
