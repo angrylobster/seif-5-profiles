@@ -30,3 +30,17 @@ export type User = {
 export type UserProps = {
     user: User;
 }
+
+export type PasswordResetProps = {
+    passwordResetId: string;
+}
+
+export type PasswordResetQuery = {
+    id: string;
+}
+
+export type ChangePasswordDto = {
+    passwordResetId: string;
+    password: string;
+    confirmPassword: string;
+}

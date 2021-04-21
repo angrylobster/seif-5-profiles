@@ -2,20 +2,25 @@ import { MailOutlined } from '@ant-design/icons'
 import { Button, Input, message, Typography } from 'antd'
 import Form from 'antd/lib/form/Form'
 import FormItem from 'antd/lib/form/FormItem'
+import Router from 'next/router'
 import React, { useState } from 'react'
 import PreloginLayout from "../components/layouts/PreloginLayout"
 import { UserCredentials } from '../interfaces/auth'
 import { frontendApiService } from '../services/api'
 
 export default function ResetPassword (): JSX.Element {
-    const [isResettingPassword, setIsResettingPassword] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [isPasswordReset, setIsPasswordReset] = useState(false)
+
     const resetPassword = (data: Pick<UserCredentials, 'email'>) => {
+        setIsLoading(true)
         frontendApiService.post('api/auth/reset-password', { data })
-            .then(response => {
-                console.log(response)
+            .then(() => {
+                message.success('Password reset email sent! Please check your inbox for details')
+                setIsPasswordReset(true)
             })
             .catch(err => message.error(`${err.status}: ${err.data || err.message}`))
-            .finally(() => setIsResettingPassword(false))
+            .finally(() => setIsLoading(false))
     }
 
     return (
@@ -38,7 +43,7 @@ export default function ResetPassword (): JSX.Element {
                     <Input 
                         prefix={<MailOutlined className="site-form-item-icon" />} 
                         placeholder="Email" 
-                        disabled={isResettingPassword}
+                        disabled={isLoading}
                     />
                 </FormItem>
 
@@ -47,10 +52,22 @@ export default function ResetPassword (): JSX.Element {
                         block
                         type="primary"
                         htmlType="submit"
-                        loading={isResettingPassword}
+                        disabled={isPasswordReset}
+                        loading={isLoading}
                     >
                         Reset password
                     </Button>
+
+                    <Button
+                        block
+                        type="default"
+                        htmlType="button"
+                        onClick={() => Router.replace('/')}
+                        style={{marginTop: '8px'}}
+                    >
+                        Go back
+                    </Button>
+
                 </FormItem>
             </Form>
         </PreloginLayout>

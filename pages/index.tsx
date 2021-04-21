@@ -61,7 +61,7 @@ export default function Home (): JSX.Element {
                 </Form.Item>
 
                 <Form.Item>
-                    <Typography.Link href="/reset-password">
+                    <Typography.Link onClick={() => Router.push('reset-password')}>
                         Reset password
                     </Typography.Link>
                 </Form.Item>
