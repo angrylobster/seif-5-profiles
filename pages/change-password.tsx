@@ -14,10 +14,10 @@ import { backendApiService, frontendApiService } from '../services/api'
 export default function ResetPassword (props: UserProps & PasswordResetProps): JSX.Element {
     const [isLoading, setIsLoading] = useState(false)
 
-    const resetPassword = async (data: ChangePasswordDto) => {
+    const resetPassword = (data: ChangePasswordDto) => {
         data.passwordResetId = props.passwordResetId
         setIsLoading(true)
-        await frontendApiService.post('api/auth/change-password', { data })
+        frontendApiService.post('api/auth/change-password', { data })
             .then(() => {
                 message.success('Changed password')
                 Router.push('/')
