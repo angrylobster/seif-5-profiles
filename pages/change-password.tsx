@@ -1,30 +1,30 @@
-import { LockOutlined } from '@ant-design/icons'
-import { Button, Input, message, Typography } from 'antd'
-import Form from 'antd/lib/form/Form'
-import FormItem from 'antd/lib/form/FormItem'
-import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next'
-import Router from 'next/router'
-import React, { useState } from 'react'
-import PreloginLayout from "../components/layouts/PreloginLayout"
-import { ChangePasswordDto, PasswordResetProps, PasswordResetQuery, User, UserProps } from '../interfaces/auth'
-import { HttpResponse } from '../interfaces/http'
-import { sendRedirect } from '../libs/api'
-import { backendApiService, frontendApiService } from '../services/api'
+import { LockOutlined } from '@ant-design/icons';
+import { Button, Input, message, Typography } from 'antd';
+import Form from 'antd/lib/form/Form';
+import FormItem from 'antd/lib/form/FormItem';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import Router from 'next/router';
+import React, { useState } from 'react';
+import PreloginLayout from "../components/layouts/PreloginLayout";
+import { ChangePasswordDto, PasswordResetProps, PasswordResetQuery, User, UserProps } from '../interfaces/auth';
+import { HttpResponse } from '../interfaces/http';
+import { sendRedirect } from '../libs/api';
+import { backendApiService, frontendApiService } from '../services/api';
 
 export default function ResetPassword (props: UserProps & PasswordResetProps): JSX.Element {
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
     const resetPassword = (data: ChangePasswordDto) => {
-        data.passwordResetId = props.passwordResetId
-        setIsLoading(true)
+        data.passwordResetId = props.passwordResetId;
+        setIsLoading(true);
         frontendApiService.post('api/auth/change-password', { data })
             .then(() => {
-                message.success('Changed password')
-                Router.push('/')
+                message.success('Changed password');
+                Router.push('/');
             })
             .catch(err => message.error(`${err.status}: ${err.data || err.message}`))
-            .finally(() => setIsLoading(false))
-    }
+            .finally(() => setIsLoading(false));
+    };
 
     return (
         <PreloginLayout>
@@ -89,15 +89,15 @@ export default function ResetPassword (props: UserProps & PasswordResetProps): J
                 </FormItem>
             </Form>
         </PreloginLayout>
-    )
+    );
 }
 
 export async function getServerSideProps (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<unknown>> {
-    const query = context.query as PasswordResetQuery
-    if (!query.id) sendRedirect(context.res, '/')
+    const query = context.query as PasswordResetQuery;
+    if (!query.id) sendRedirect(context.res, '/');
     const user = await backendApiService.get<HttpResponse<Pick<User, 'name'>>>('auth/change-password', { params: { passwordResetId: query.id } })
         .then(res => res.data)
-        .catch(() => sendRedirect(context.res, '/'))
-    return { props: { user, passwordResetId: query.id } }
+        .catch(() => sendRedirect(context.res, '/'));
+    return { props: { user, passwordResetId: query.id } };
 }
 

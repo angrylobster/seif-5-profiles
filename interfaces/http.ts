@@ -6,8 +6,8 @@ export class HttpResponse <T> {
     data: T;
 
     constructor (status: number, data: T) {
-        this.status = status
-        this.data = data
+        this.status = status;
+        this.data = data;
     }
 }
 
@@ -22,15 +22,15 @@ export class HttpBackendError extends Error {
         data: unknown,
     ) {
         super();
-        this.status = status
-        this.error = error
-        this.data = data
+        this.status = status;
+        this.error = error;
+        this.data = data;
     }
 }
 
 export class UnsupportedMethodError extends HttpBackendError {
     private static readonly code = StatusCodes.METHOD_NOT_ALLOWED
     constructor (method: string) {
-        super(UnsupportedMethodError.code, getReasonPhrase(UnsupportedMethodError.code), `${method} request is not allowed`)
+        super(UnsupportedMethodError.code, getReasonPhrase(UnsupportedMethodError.code), `${method} request is not allowed`);
     }
 }

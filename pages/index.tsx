@@ -1,28 +1,28 @@
-import React, { useState } from 'react'
-import { Button, Form, Input, message, Typography } from 'antd'
-import { LockOutlined, MailOutlined } from '@ant-design/icons'
-import Router from 'next/router'
-import { UserCredentials } from '../interfaces/auth'
-import { redirectAuth } from '../libs/api'
-import { frontendApiService } from '../services/api'
-import useUser from '../hooks/useUser'
-import PreloginLayout from '../components/layouts/PreloginLayout'
+import React, { useState } from 'react';
+import { Button, Form, Input, message, Typography } from 'antd';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
+import Router from 'next/router';
+import { UserCredentials } from '../interfaces/auth';
+import { redirectAuth } from '../libs/api';
+import { frontendApiService } from '../services/api';
+import useUser from '../hooks/useUser';
+import PreloginLayout from '../components/layouts/PreloginLayout';
 
 export default function Home (): JSX.Element {
-    const { mutateUser } = useUser()
-    const [isLoggingIn, setIsLoggingIn] = useState(false)
+    const { mutateUser } = useUser();
+    const [isLoggingIn, setIsLoggingIn] = useState(false);
 
     const login = async (credentials: UserCredentials) => {
         try {
-            setIsLoggingIn(true)
-            const { data: user } = await frontendApiService.post('api/auth/login', { data: credentials })
-            mutateUser(user)
-            Router.push('profile')
+            setIsLoggingIn(true);
+            const { data: user } = await frontendApiService.post('api/auth/login', { data: credentials });
+            mutateUser(user);
+            Router.push('profile');
         } catch (err) {
-            message.error(`${err.status}: ${err.data}`)
-            setIsLoggingIn(false)
+            message.error(`${err.status}: ${err.data}`);
+            setIsLoggingIn(false);
         }
-    }
+    };
 
     return (
         <PreloginLayout>
@@ -77,7 +77,7 @@ export default function Home (): JSX.Element {
                 </Form.Item>
             </Form>
         </PreloginLayout>
-    )
+    );
 }
 
 export const getServerSideProps = redirectAuth();

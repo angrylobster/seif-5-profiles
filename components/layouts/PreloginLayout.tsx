@@ -1,6 +1,6 @@
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren } from 'react';
 import { Layout, Row } from "antd";
-import helpers from '../../styles/helpers.module.css'
+import helpers from '../../styles/helpers.module.css';
 import { Content } from 'antd/lib/layout/layout';
 
 export default function PreloginLayout (props: PropsWithChildren<React.ReactNode>): JSX.Element {
@@ -16,5 +16,5 @@ export default function PreloginLayout (props: PropsWithChildren<React.ReactNode
                 </Row>
             </Content>
         </Layout>
-    )
+    );
 }

@@ -11,7 +11,7 @@ export class AuthorizationHeader {
     Authorization: string;
 
     constructor (jwt: string) {
-        this.Authorization = `Bearer ${jwt}`
+        this.Authorization = `Bearer ${jwt}`;
     }
 }
 

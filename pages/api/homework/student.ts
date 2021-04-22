@@ -1,15 +1,15 @@
-import { NextApiRequest, NextApiResponse } from "next"
-import { AuthorizationHeader } from "../../../interfaces/auth"
-import { UnsupportedMethodError, HttpResponse } from "../../../interfaces/http"
-import { formatHttpResponse, formatErrorResponse } from "../../../libs/api"
-import homeworkService from '../../../services/homework'
+import { NextApiRequest, NextApiResponse } from "next";
+import { AuthorizationHeader } from "../../../interfaces/auth";
+import { UnsupportedMethodError, HttpResponse } from "../../../interfaces/http";
+import { formatHttpResponse, formatErrorResponse } from "../../../libs/api";
+import homeworkService from '../../../services/homework';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
     try {
-        if (req.method !== 'GET') throw new UnsupportedMethodError(req.method)
-        const response = await homeworkService.getHomeworkCompletion({ headers: new AuthorizationHeader(req.cookies.jwt) })
-        formatHttpResponse(res, response.status, new HttpResponse(response.status, response.data))
+        if (req.method !== 'GET') throw new UnsupportedMethodError(req.method);
+        const response = await homeworkService.getHomeworkCompletion({ headers: new AuthorizationHeader(req.cookies.jwt) });
+        formatHttpResponse(res, response.status, new HttpResponse(response.status, response.data));
     } catch (err) {
-        formatErrorResponse(res, err)
+        formatErrorResponse(res, err);
     }
-}
+};

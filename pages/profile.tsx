@@ -1,15 +1,15 @@
-import { Col, Typography } from 'antd'
-import React, {  } from 'react'
-import { backendApiService } from '../services/api'
-import { GetStaticPropsResult } from 'next'
-import { Homework, HomeworkProps } from '../interfaces/homework'
-import { HttpResponse } from '../interfaces/http'
-import ApplicationLayout from '../components/layouts/ApplicationLayout'
-import HomeworkTable from '../components/homework/HomeworkTable'
-import useUser from '../hooks/useUser'
+import { Col, Typography } from 'antd';
+import React, {  } from 'react';
+import { backendApiService } from '../services/api';
+import { GetStaticPropsResult } from 'next';
+import { Homework, HomeworkProps } from '../interfaces/homework';
+import { HttpResponse } from '../interfaces/http';
+import ApplicationLayout from '../components/layouts/ApplicationLayout';
+import HomeworkTable from '../components/homework/HomeworkTable';
+import useUser from '../hooks/useUser';
 
 function Profile (props: HomeworkProps): JSX.Element {
-    const { user } = useUser('/')
+    const { user } = useUser('/');
     
     return (
         <ApplicationLayout
@@ -28,15 +28,15 @@ function Profile (props: HomeworkProps): JSX.Element {
                 />
             </Col>
         </ApplicationLayout>  
-    )
+    );
 }
 
 export async function getStaticProps (): Promise<GetStaticPropsResult<HomeworkProps>> {
     const homework = await backendApiService.get<HttpResponse<Homework[]>>('homework/columns')
         .then(response => response.data)
-        .catch(() => [])
+        .catch(() => []);
 
-    return { props: { homework } }
+    return { props: { homework } };
 }
 
-export default Profile
+export default Profile;

@@ -1,4 +1,4 @@
-import { NextApiResponse } from "next"
+import { NextApiResponse } from "next";
 import { CookieSerializeOptions, serialize, } from 'cookie';
 import { decode } from "jsonwebtoken";
 
@@ -15,7 +15,7 @@ export const setJwtCookie = (
         path: '/',
     } as CookieSerializeOptions);
     res.setHeader('Set-Cookie', jwtCookie);
-}
+};
 
 export const expireJwtCookie = (res: NextApiResponse): void => {
     res.setHeader(
@@ -29,4 +29,4 @@ export const expireJwtCookie = (res: NextApiResponse): void => {
             }
         )
     );
-}
+};
