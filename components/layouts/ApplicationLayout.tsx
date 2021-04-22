@@ -1,5 +1,5 @@
 import { LogoutOutlined } from "@ant-design/icons";
-import { Button, Col, message, Row, Space, Tooltip, Typography } from "antd";
+import { Button, Col, message, Row, Tooltip, Typography } from "antd";
 import Layout from "antd/lib/layout";
 import { Content, Header } from "antd/lib/layout/layout";
 import Router from "next/router";
