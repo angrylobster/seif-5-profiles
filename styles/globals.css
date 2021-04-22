@@ -46,3 +46,5 @@ a {
 .reset-password {
   color: red;
 }
+
+.search-table-outer { overflow-x: scroll; }

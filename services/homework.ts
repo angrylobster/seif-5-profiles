@@ -11,6 +11,10 @@ class HomeworkService {
     getHomeworkCompletion (options?: Partial<AxiosRequestConfig>): Promise<HttpResponse<string[]>> {
         return backendApiService.get<HttpResponse<string[]>>('homework/student', options);
     }
+
+    getHomeworkByStudent (options?: Partial<AxiosRequestConfig>): Promise<HttpResponse<Homework>> {
+        return backendApiService.get<HttpResponse<Homework>>('homework', options);
+    }
 }
 
 export default new HomeworkService();

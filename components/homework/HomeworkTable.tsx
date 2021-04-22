@@ -1,60 +1,30 @@
 import { message, Table, Typography } from "antd";
-import { ColumnsType, ColumnType } from "antd/lib/table";
 import React, { useEffect, useState } from "react";
 import { UserProps } from "../../interfaces/auth";
-import { Homework, HomeworkCompletion, HomeworkCompletionRecord, HomeworkProps } from "../../interfaces/homework";
+import { Homework, HomeworkCompletion } from "../../interfaces/homework";
 import { HttpResponse } from "../../interfaces/http";
 import { frontendApiService } from "../../services/api";
 import HomeworkCompletionIcon from "./HomeworkCompletionIcon";
 
-export default function HomeworkTable (props: HomeworkProps & UserProps): JSX.Element {
+
+export default function HomeworkTable (props: UserProps): JSX.Element {
     const [isTableLoading, setIsTableLoading] = useState(true);
-    const [homeworkColumns, setHomeworkColumns] = useState([]);
-    const [homeworkCompletion, setHomeworkCompletion] = useState([]);
+    const [homework, setHomework] = useState([]);
     const [completionPercentage, setCompletionPercentage] = useState(0);
 
     useEffect(() => {
-        setHomeworkColumns(props.homework.reduce((columns, homework: Homework, index: number) => {
-            columns.push({
-                className: 'homeworkCompletionTableHeader',
-                key: index,
-                title: homework.lesson,
-                children: [
-                    {
-                        className: 'homeworkCompletionTableHeader',
-                        title: homework.name,
-                        width: 100,
-                        dataIndex: ['homework', homework.lesson],
-                        render (value: HomeworkCompletion) {
-                            return <HomeworkCompletionIcon completion={value} />;
-                        }
-                    }
-                ]
-            });
-            return columns;
-        }, [] as ColumnsType<Homework>));
-    }, []);
-
-    useEffect(() => {
-        if (props.user && homeworkColumns.length) {
-            frontendApiService.get<HttpResponse<string[]>>('api/homework/student')
-                .then(response => {
-                    const result = homeworkColumns.reduce((result: HomeworkCompletionRecord, homework: ColumnType<Homework>, index: number) => {
-                        result.homework[homework.title as string] = response.data[index];
-                        return result;
-                    }, { key: props.user.email, homework: {} } as HomeworkCompletionRecord);
-                    const numberHomework = homeworkColumns.length;
-                    const completedHomework = response.data.filter(homework => homework === HomeworkCompletion.Completed);
-                    setCompletionPercentage(Number((completedHomework.length / numberHomework * 100).toFixed(2)));
-                    setHomeworkCompletion([result]);
-                })
-                .catch((err) => {
-                    message.error(`${err.status ? err.status + ': ' : ''}${err.message}`);
-                    setHomeworkCompletion([]);
-                })
-                .finally(() => setIsTableLoading(false));
-        }
-    }, [props.user, homeworkColumns.length]);
+        frontendApiService.get<HttpResponse<Homework[]>>('api/homework')
+            .then(response => {
+                const homework = response.data.map((homework: Homework, index: number) => ({ ...homework, key: index }));
+                const completedHomework = homework.filter(homework => homework.completion === HomeworkCompletion.Completed);
+                setHomework(homework);
+                setCompletionPercentage(completedHomework.length / homework.length * 100);
+            })
+            .catch((err) => {
+                message.error(`${err.status ? err.status + ': ' : ''}${err.message}`);
+            })
+            .finally(() => setIsTableLoading(false));
+    }, [props.user]);
 
     const computeCompletionClass = (percentage: number): string => {
         if (percentage > 70) return 'completion-green';
@@ -65,13 +35,40 @@ export default function HomeworkTable (props: HomeworkProps & UserProps): JSX.El
     return (
         <Table
             loading={isTableLoading}
-            columns={homeworkColumns}
-            dataSource={homeworkCompletion}
+            columns={[
+                {
+                    title: 'Lesson',
+                    dataIndex: 'lesson',
+                    width: 100,
+                    align: 'center',
+                },
+                {
+                    title: 'Name',
+                    dataIndex: 'name',
+                    width: 300,
+                },
+                {
+                    title: 'Due Date',
+                    dataIndex: 'dueDate',
+                    width: 100,
+                    align: 'center',
+                },
+                {
+                    title: 'Completion',
+                    dataIndex: 'completion',
+                    width: 100,
+                    align: 'center',
+                    render (value: HomeworkCompletion) {
+                        return <HomeworkCompletionIcon completion={value}/>;
+                    }
+                }
+            ]}
+            dataSource={homework}
             bordered
             size="small"
             pagination={false}
             tableLayout="fixed"
-            scroll={{x: true, y: 39}}
+            scroll={{ y: 250 }}
             footer={() => {
                 return completionPercentage ? (
                     <>

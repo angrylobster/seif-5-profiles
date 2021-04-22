@@ -31,7 +31,7 @@ export default function ApplicationLayout (props: PropsWithChildren<ReactNode> &
                     >
                         { props?.user?.email && 
                             <Typography.Title 
-                                level={5}
+                                level={4}
                                 style={{marginBottom: 0, color: 'white'}}
                             >
                                 {props.user.name.first} {props.user.name.last}
@@ -53,19 +53,7 @@ export default function ApplicationLayout (props: PropsWithChildren<ReactNode> &
             </Header>
 
             <Content>
-                <Row 
-                    justify="start"
-                    style={{ padding: '32px 50px' }}
-                >
-                    {props.title && 
-                        <Typography.Title 
-                            level={3} 
-                            style={{marginBottom: '24px'}}
-                        >{props.title}</Typography.Title>
-                    }
-
-                    {props.children}
-                </Row>
+                {props.children}
             </Content>
         </Layout>
     );
