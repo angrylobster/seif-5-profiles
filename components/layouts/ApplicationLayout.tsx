@@ -16,7 +16,7 @@ export default function ApplicationLayout (props: PropsWithChildren<ReactNode> &
     const logout = () => {
         frontendApiService.post('api/auth/logout')
             .then(() => Router.push('/'))
-            .catch(err => message.error(`${err.status}: ${err.data}`));
+            .catch(err => message.error(`${err.status ? err.status + ': ' : ''}${err.data || err.message}`));
     };
 
     return (

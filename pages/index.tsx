@@ -19,7 +19,7 @@ export default function Home (): JSX.Element {
             mutateUser(user);
             Router.push('profile');
         } catch (err) {
-            message.error(`${err.status}: ${err.data}`);
+            message.error(`${err.status ? err.status + ': ' : ''}${err.data || err.message}`);
             setIsLoggingIn(false);
         }
     };

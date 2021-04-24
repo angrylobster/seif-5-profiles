@@ -31,8 +31,11 @@ class ApiService {
             if (!response) throw new HttpBackendError(StatusCodes.NOT_FOUND, getReasonPhrase(StatusCodes.NOT_FOUND), 'Could not retrieve a response');
             return response.data;
         } catch (err) {
-            const { response: { status, data } } = err as AxiosError;
-            throw new HttpBackendError(status, getReasonPhrase(status), data.data);
+            const response = err.response;
+            const status = response ? response.status : StatusCodes.INTERNAL_SERVER_ERROR;
+            const error = getReasonPhrase(status);
+            const data = response ? response.data.data : err.message;
+            throw new HttpBackendError(status, error, data);
         }
     }
 }

@@ -21,7 +21,7 @@ export default function HomeworkTable (props: UserProps): JSX.Element {
                 setCompletionPercentage(completedHomework.length / homework.length * 100);
             })
             .catch((err) => {
-                message.error(`${err.status ? err.status + ': ' : ''}${err.message}`);
+                message.error(`${err.status ? err.status + ': ' : ''}${err.data || err.message}`);
             })
             .finally(() => setIsTableLoading(false));
     }, [props.user]);

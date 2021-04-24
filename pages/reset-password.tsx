@@ -19,7 +19,7 @@ export default function ResetPassword (): JSX.Element {
                 message.success('Password reset email sent! Please check your inbox for details');
                 setIsPasswordReset(true);
             })
-            .catch(err => message.error(`${err.status}: ${err.data || err.message}`))
+            .catch(err => message.error(`${err.status ? err.status + ': ' : ''}${err.data || err.message}`))
             .finally(() => setIsLoading(false));
     };
 
