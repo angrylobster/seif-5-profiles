@@ -2,8 +2,8 @@ import { HomeworkCompletion } from "../../interfaces/homework";
 import React from 'react';
 import { CheckOutlined, CloseOutlined, QuestionOutlined } from "@ant-design/icons";
 
-type HomeworkCompletionIconProps = {
-    completion: HomeworkCompletion;
+export type HomeworkCompletionIconProps = {
+    completion?: HomeworkCompletion;
 }
 
 export default function HomeworkCompletionIcon (props: HomeworkCompletionIconProps): JSX.Element {
