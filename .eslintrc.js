@@ -25,7 +25,8 @@ module.exports = {
         indent: ['warn', 4, { SwitchCase: 1 }],
         'no-use-before-define': 'off',
         '@typescript-eslint/no-use-before-define': ['error'],
-        semi: ['warn', 'always']
+        semi: ['warn', 'always'],
+        quotes: ['warn', 'single'],
     },
     overrides: [
         {

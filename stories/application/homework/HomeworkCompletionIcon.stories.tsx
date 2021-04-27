@@ -1,6 +1,6 @@
 import React from 'react';
-import { Meta, Story } from "@storybook/react";
-import HomeworkCompletionIcon, { HomeworkCompletionIconProps } from "../../../components/homework/HomeworkCompletionIcon";
+import { Meta, Story } from '@storybook/react';
+import HomeworkCompletionIcon, { HomeworkCompletionIconProps } from '../../../components/homework/HomeworkCompletionIcon';
 
 export default {
     title: 'Components/Application/Homework/HomeworkCompletionIcon',

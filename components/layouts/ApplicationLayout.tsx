@@ -1,12 +1,12 @@
-import { LogoutOutlined } from "@ant-design/icons";
-import { Button, Col, message, Row, Tooltip, Typography } from "antd";
-import Layout from "antd/lib/layout";
-import { Content, Header } from "antd/lib/layout/layout";
-import Router from "next/router";
-import React, { PropsWithChildren, ReactNode } from "react";
-import { UserProps } from "../../interfaces/auth";
-import { frontendApiService } from "../../services/api";
-import helpers from '../../styles/helpers.module.css';
+import { LogoutOutlined } from '@ant-design/icons';
+import { Button, Col, message, Row, Tooltip, Typography } from 'antd';
+import Layout from 'antd/lib/layout';
+import { Content, Header } from 'antd/lib/layout/layout';
+import Router from 'next/router';
+import React, { PropsWithChildren, ReactNode } from 'react';
+import { UserProps } from '../../interfaces/auth';
+import { frontendApiService } from '../../services/api';
+import helpers from '../../styles/modules/helpers.module.css';
 
 type TitleProps = {
     title?: string;
