@@ -1,5 +1,5 @@
 import React from 'react';
-import { Meta, Story } from "@storybook/react";
+import { Meta, Story } from '@storybook/react';
 import ProfileDetails, { ProfileDetailsProps } from '../../../components/profile/ProfileDetails';
 
 export default {
@@ -9,7 +9,7 @@ export default {
     },
 } as Meta;
 
-const Template: Story<any> = args => <ProfileDetails {...args} />;
+const Template: Story<ProfileDetailsProps> = args => <ProfileDetails {...args} />;
 
 export const Default = Template.bind({});
 Default.args = undefined;
