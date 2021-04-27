@@ -16,10 +16,14 @@ Default.args = undefined;
 
 export const WithUser = Template.bind({});
 WithUser.args = {
-    firstName: 'Serati',
-    lastName: 'Ma',
-    email: 'johndoe@email.com',
-    enrollmentDate: '5-Mar-21',
-    githubHandle: 'bananaMonster',
-    readinessAssessment: 19,
+    user: {
+        name: {
+            first: 'Serati',
+            last: 'Ma',
+        },
+        email: 'johndoe@email.com',
+        enrollmentDate: '5-Mar-21',
+        githubHandle: 'bananaMonster',
+        readinessAssessment: 19,
+    }
 } as ProfileDetailsProps;

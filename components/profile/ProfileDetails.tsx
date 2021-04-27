@@ -6,6 +6,7 @@ import profile from '../../styles/modules/profile.module.css';
 import helpers from '../../styles/modules/helpers.module.css';
 import { CalendarOutlined, FormOutlined, GithubOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import { User } from '../../interfaces/auth';
 
 type ProfileDetailsAttributeProps = {
     children: unknown;
@@ -25,61 +26,64 @@ function ProfileDetailsAttribute (props: ProfileDetailsAttributeProps) {
 }
 
 export type ProfileDetailsProps = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    enrollmentDate: string;
-    githubHandle: string;
-    readinessAssessment: number;
+    user: User;
 }
 
-export default function ProfileDetails (profileDetails: ProfileDetailsProps): ReactElement {
+export default function ProfileDetails (props: ProfileDetailsProps): ReactElement {
     return (
         <Card>
-            {!profileDetails
+            {!props.user
                 ? <Skeleton />
-                : <>
+                : <Col>
                     <Row justify="center" className={helpers['mb-4']}>
                         <Col>
                             <Row 
                                 className={helpers['mb-4']} 
                                 justify="center"
                             >
-                                <ProfileAvatar 
-                                    firstName={profileDetails.firstName}
-                                    lastName={profileDetails.lastName}
-                                />
+                                <Col>
+                                    <ProfileAvatar 
+                                        firstName={props.user.name.first}
+                                        lastName={props.user.name.last}
+                                    />
+                                </Col>
                             </Row>
 
                             <Row justify="center">
-                                <Typography.Text className={profile.userName}>{profileDetails.firstName} {profileDetails.lastName}</Typography.Text>
+                                <Col>
+                                    <Typography.Text className={profile.userName}>
+                                        {props.user.name.first} {props.user.name.last}
+                                    </Typography.Text>
+                                </Col>
                             </Row>
 
                             <Row justify="center">
-                                <Typography.Text>{profileDetails.email}</Typography.Text>
+                                <Col>
+                                    <Typography.Text>{props.user.email}</Typography.Text>
+                                </Col>
                             </Row>
                         </Col>
                     </Row>
             
                     <Row>
                         <Col>
-                            <ProfileDetailsAttribute description="Enrollment Date" show={!!profileDetails.enrollmentDate}>
+                            <ProfileDetailsAttribute description="Enrollment Date" show={!!props.user.enrollmentDate}>
                                 <CalendarOutlined style={{ marginRight: '4px' }} />
-                                {moment(profileDetails.enrollmentDate, 'D-MMM-YY').format('D MMM YYYY')}
+                                {moment(props.user.enrollmentDate, 'D-MMM-YY').format('D MMM YYYY')}
                             </ProfileDetailsAttribute>
 
-                            <ProfileDetailsAttribute description="Readiness Assessment" show={!!profileDetails.readinessAssessment}>
+                            <ProfileDetailsAttribute description="Readiness Assessment" show={!!props.user.readinessAssessment}>
                                 <FormOutlined style={{ marginRight: '4px' }} />
-                                {profileDetails.readinessAssessment} / 30
+                                {props.user.readinessAssessment} / 30
                             </ProfileDetailsAttribute>
                     
-                            <ProfileDetailsAttribute description="GitHub Handle" show={!!profileDetails.githubHandle}>
+                            <ProfileDetailsAttribute description="GitHub Handle" show={!!props.user.githubHandle}>
                                 <GithubOutlined style={{ marginRight: '4px' }} />
-                                {profileDetails.githubHandle}
+                                {props.user.githubHandle}
                             </ProfileDetailsAttribute>
                         </Col>
                     </Row>
-                </>
+                </Col>
             }
         </Card>
     );

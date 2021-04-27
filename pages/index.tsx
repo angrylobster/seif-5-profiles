@@ -7,6 +7,7 @@ import { redirectAuth } from '../libs/api';
 import { frontendApiService } from '../services/api';
 import useUser from '../hooks/useUser';
 import PreloginLayout from '../components/layouts/PreloginLayout';
+import Image from 'next/image';
 
 export default function Home (): JSX.Element {
     const { mutateUser } = useUser();
@@ -31,6 +32,14 @@ export default function Home (): JSX.Element {
                 className="login-form"
                 onFinish={login}
             >
+                <Form.Item style={{ textAlign: 'center', marginBottom: '8px' }}>
+                    <Image 
+                        src="/GA-logo.png"
+                        height={80}
+                        width= {80}
+                    />
+                </Form.Item>
+
                 <Form.Item>
                     <Typography.Title level={3} style={{ marginBottom: '0px' }}>
                                 SEIF 5 Student Profiles

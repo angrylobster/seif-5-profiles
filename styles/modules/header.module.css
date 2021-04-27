@@ -1,0 +1,10 @@
+.header {
+    height: 48px;
+    box-shadow: 0 1px 4px rgba(0,21,41,.08);
+    background: #fff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 24px;
+}

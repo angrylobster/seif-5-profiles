@@ -23,6 +23,9 @@ export interface NameDetails {
 export type User = {
     name: NameDetails;
     email: string;
+    enrollmentDate: string;
+    readinessAssessment: number;
+    githubHandle: string;
     iat: number;
     exp: number;
 }

@@ -1,31 +1,15 @@
-import { message, Table, Typography } from "antd";
-import React, { useEffect, useState } from "react";
-import { UserProps } from "../../interfaces/auth";
-import { Homework, HomeworkCompletion } from "../../interfaces/homework";
-import { HttpResponse } from "../../interfaces/http";
-import { frontendApiService } from "../../services/api";
-import HomeworkCompletionIcon from "./HomeworkCompletionIcon";
+import { Table, Typography } from 'antd';
+import React from 'react';
+import { Homework, HomeworkCompletion } from '../../interfaces/homework';
+import HomeworkCompletionIcon from './HomeworkCompletionIcon';
 
+export type HomeworkTableProps = {
+    submissions: (Homework & { key: string })[];
+    completionPercentage: number;
+    isLoading: boolean;
+}
 
-export default function HomeworkTable (props: UserProps): JSX.Element {
-    const [isTableLoading, setIsTableLoading] = useState(true);
-    const [homework, setHomework] = useState([]);
-    const [completionPercentage, setCompletionPercentage] = useState(0);
-
-    useEffect(() => {
-        frontendApiService.get<HttpResponse<Homework[]>>('api/homework')
-            .then(response => {
-                const homework = response.data.map((homework: Homework, index: number) => ({ ...homework, key: index }));
-                const completedHomework = homework.filter(homework => homework.completion === HomeworkCompletion.Completed);
-                setHomework(homework);
-                setCompletionPercentage(completedHomework.length / homework.length * 100);
-            })
-            .catch((err) => {
-                message.error(`${err.status ? err.status + ': ' : ''}${err.data || err.message}`);
-            })
-            .finally(() => setIsTableLoading(false));
-    }, [props.user]);
-
+export default function HomeworkTable (props: HomeworkTableProps): JSX.Element {
     const computeCompletionClass = (percentage: number): string => {
         if (percentage > 70) return 'completion-green';
         if (percentage > 40) return 'completion-yellow';
@@ -34,7 +18,7 @@ export default function HomeworkTable (props: UserProps): JSX.Element {
 
     return (
         <Table
-            loading={isTableLoading}
+            loading={props.isLoading}
             columns={[
                 {
                     title: 'Lesson',
@@ -63,19 +47,21 @@ export default function HomeworkTable (props: UserProps): JSX.Element {
                     }
                 }
             ]}
-            dataSource={homework}
+            dataSource={props.submissions}
             bordered
             size="small"
             pagination={false}
             tableLayout="fixed"
-            scroll={{ y: 250 }}
+            scroll={{
+                x: '100%',
+            }}
             footer={() => {
-                return completionPercentage ? (
+                return props.completionPercentage ? (
                     <>
-                        {completionPercentage && 
-                        <Typography.Text>
-                            Completion: <Typography.Text className={computeCompletionClass(completionPercentage)}>{completionPercentage}%</Typography.Text>
-                        </Typography.Text>
+                        {props.completionPercentage && 
+                            <Typography.Text>
+                                Completion: <Typography.Text className={computeCompletionClass(props.completionPercentage)}>{props.completionPercentage.toFixed(2)}%</Typography.Text>
+                            </Typography.Text>
                         }
                     </>
                 ) : false;
