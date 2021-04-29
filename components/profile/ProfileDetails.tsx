@@ -1,5 +1,5 @@
 import { Card, Col, Row, Skeleton, Tooltip, Typography } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactElement } from 'react';
 import ProfileAvatar from './ProfileAvatar';
 import profile from '../../styles/modules/profile.module.css';
@@ -30,12 +30,22 @@ export type ProfileDetailsProps = {
 }
 
 export default function ProfileDetails (props: ProfileDetailsProps): ReactElement {
+    const [shouldShowAttributes, setShouldShowAttributes] = useState(false);
+
+    useEffect(() => {
+        if (
+            props?.user?.enrollmentDate 
+            && props?.user?.githubHandle
+            && props?.user?.readinessAssessment
+        ) setShouldShowAttributes(true);
+    }, [props.user]);
+
     return (
         <Card>
             {!props.user
                 ? <Skeleton />
                 : <Col>
-                    <Row justify="center" className={helpers['mb-4']}>
+                    <Row justify="center" className={shouldShowAttributes && helpers['mb-4']}>
                         <Col>
                             <Row 
                                 className={helpers['mb-4']} 
