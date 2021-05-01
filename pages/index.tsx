@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, message, Typography } from 'antd';
+import { Button, Form, Input, message, Typography, Image } from 'antd';
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import Router from 'next/router';
 import { UserCredentials } from '../interfaces/auth';
@@ -7,7 +7,6 @@ import { redirectAuth } from '../libs/api';
 import { frontendApiService } from '../services/api';
 import useUser from '../hooks/useUser';
 import PreloginLayout from '../components/layouts/PreloginLayout';
-import Image from 'next/image';
 
 export default function Home (): JSX.Element {
     const { mutateUser } = useUser();
