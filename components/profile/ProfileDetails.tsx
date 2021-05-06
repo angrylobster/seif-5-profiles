@@ -43,7 +43,7 @@ export default function ProfileDetails (props: ProfileDetailsProps): ReactElemen
     return (
         <Card>
             {!props.user
-                ? <Skeleton />
+                ? <Skeleton active />
                 : <Col>
                     <Row justify="center" className={shouldShowAttributes && helpers['mb-4']}>
                         <Col>
