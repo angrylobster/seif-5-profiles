@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { UnsupportedMethodError, HttpResponse } from "../../../interfaces/http";
-import { formatHttpResponse, formatErrorResponse } from "../../../libs/api";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { UnsupportedMethodError, HttpResponse } from '../../../interfaces/http';
+import { formatHttpResponse, formatErrorResponse } from '../../../libs/api';
 import homeworkService from '../../../services/homework';
 
 export default async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {

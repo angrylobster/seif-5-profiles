@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card } from 'antd';
 import { ReactElement } from 'react';
 import HomeworkTable, { HomeworkTableProps } from '../homework/HomeworkTable';
+import AttendanceData, { AttendanceDataProps } from '../attendance/AttendanceData';
 
 const TAB_LIST = [
     {
@@ -11,7 +12,6 @@ const TAB_LIST = [
     {
         key: 'attendance',
         tab: 'Attendance',
-        disabled: true,
     }
 ];
 
@@ -30,6 +30,13 @@ function ProfileDataContent (props: ProfileDataContentProps): ReactElement {
                     isLoading={props.profileData.homeworkData.isLoading}
                 />
             );
+        case 'attendance':
+            return (
+                <AttendanceData 
+                    records={props.profileData.attendanceData.records}
+                    totalRecords={props.profileData.attendanceData.totalRecords}
+                />
+            );
         default:
             return <></>;
     }
@@ -37,6 +44,7 @@ function ProfileDataContent (props: ProfileDataContentProps): ReactElement {
 
 export type ProfileDataProps = {
     homeworkData: HomeworkTableProps;
+    attendanceData: AttendanceDataProps;
 };
 
 export default function ProfileData (props: ProfileDataProps): ReactElement {

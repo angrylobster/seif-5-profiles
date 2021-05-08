@@ -10,6 +10,16 @@ import { HttpResponse } from '../interfaces/http';
 
 function Profile (): JSX.Element {
     const { user } = useUser('/');
+    const [records, setRecords] = useState({
+        P: [],
+        L: [],
+        A: [],
+        E: [],
+        EA: [],
+        SC: [],
+        H: [],
+    });
+    const [totalRecords, setTotalRecords] = useState(0);
     const [isHomeworkLoading, setIsHomeworkLoading] = useState(false);
     const [submissions, setSubmissions] = useState([]);
     const [homeworkCompletion, setHomeworkCompletion] = useState(0);
@@ -58,6 +68,10 @@ function Profile (): JSX.Element {
                             submissions,
                             completionPercentage: homeworkCompletion,
                             isLoading: isHomeworkLoading,
+                        }}
+                        attendanceData={{
+                            records,
+                            totalRecords,
                         }}
                     />
                 </Col>
