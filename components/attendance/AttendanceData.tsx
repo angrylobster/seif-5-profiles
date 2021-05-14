@@ -14,9 +14,10 @@ export type AttendanceDataProps = {
         H: Attendance[];
     };
     totalRecords: number;
+    isLoading: boolean;
 }
 
-export default function AttendanceData (props: AttendanceDataProps & { isLoading: boolean }): ReactElement {
+export default function AttendanceData (props: AttendanceDataProps): ReactElement {
     return (
         <>
             {props.totalRecords

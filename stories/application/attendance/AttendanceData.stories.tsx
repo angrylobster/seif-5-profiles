@@ -22,6 +22,7 @@ Default.args = {
         H: [],
     },
     totalRecords: 0,
+    isLoading: false,
 } as AttendanceDataProps;
 
 export const WithPresentAndHoliday = Template.bind({});
@@ -58,4 +59,5 @@ WithPresentAndHoliday.args = {
         ],
     },
     totalRecords: 5,
+    isLoading: false,
 } as AttendanceDataProps;

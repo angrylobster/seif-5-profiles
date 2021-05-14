@@ -1,5 +1,5 @@
 import { Col, message, Row } from 'antd';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ApplicationLayout from '../components/layouts/ApplicationLayout';
 import useUser from '../hooks/useUser';
 import ProfileDetails from '../components/profile/ProfileDetails';

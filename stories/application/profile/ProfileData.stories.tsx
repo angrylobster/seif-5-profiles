@@ -1,7 +1,6 @@
 import { Meta, Story } from '@storybook/react';
 import React from 'react';
 import ProfileData, { ProfileDataProps } from '../../../components/profile/ProfileData';
-import { Attendance, AttendancePeriod } from '../../../interfaces/attendance';
 import { Homework } from '../../../interfaces/homework';
 
 const HOMEWORK_DATA = [
@@ -67,5 +66,6 @@ WithData.args = {
             H: [],
         },
         totalRecords: 5,
+        isLoading: false,
     }
 } as ProfileDataProps;
