@@ -1,3 +1,4 @@
+import { Skeleton } from 'antd';
 import React, { ReactElement } from 'react';
 import { Attendance, AttendanceRecordEnum } from '../../interfaces/attendance';
 import AttendanceTypeDetails from './AttendanceTypeDetails';
@@ -15,20 +16,22 @@ export type AttendanceDataProps = {
     totalRecords: number;
 }
 
-export default function AttendanceData (props: AttendanceDataProps): ReactElement {
+export default function AttendanceData (props: AttendanceDataProps & { isLoading: boolean }): ReactElement {
     return (
         <>
-            {Object.keys(props.records)
-                .map((attendanceType: string, index: number) => {
-                    return (
-                        <AttendanceTypeDetails 
-                            key={index}
-                            recordType={attendanceType as AttendanceRecordEnum}
-                            records={props.records[attendanceType]}
-                            totalRecords={props.totalRecords}
-                        />
-                    );
-                })
+            {props.totalRecords
+                ? Object.keys(props.records)
+                    .map((attendanceType: string, index: number) => {
+                        return (
+                            <AttendanceTypeDetails 
+                                key={index}
+                                recordType={attendanceType as AttendanceRecordEnum}
+                                records={props.records[attendanceType]}
+                                totalRecords={props.totalRecords}
+                            />
+                        );
+                    })
+                : <Skeleton active />
             }
         </>
     );

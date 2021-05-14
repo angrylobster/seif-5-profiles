@@ -1,5 +1,5 @@
 import { Col, message, Row } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ApplicationLayout from '../components/layouts/ApplicationLayout';
 import useUser from '../hooks/useUser';
 import ProfileDetails from '../components/profile/ProfileDetails';
@@ -7,10 +7,11 @@ import ProfileData from '../components/profile/ProfileData';
 import { frontendApiService } from '../services/api';
 import { Homework, HomeworkCompletion } from '../interfaces/homework';
 import { HttpResponse } from '../interfaces/http';
+import { AttendanceDataProps } from '../components/attendance/AttendanceData';
 
 function Profile (): JSX.Element {
     const { user } = useUser('/');
-    const [records, setRecords] = useState({
+    const [attendanceRecords, setAttendanceRecords] = useState({
         P: [],
         L: [],
         A: [],
@@ -19,8 +20,9 @@ function Profile (): JSX.Element {
         SC: [],
         H: [],
     });
-    const [totalRecords, setTotalRecords] = useState(0);
+    const [totalAttendanceRecords, setTotalAttendanceRecords] = useState(0);
     const [isHomeworkLoading, setIsHomeworkLoading] = useState(false);
+    const [isFetchingAttendance, setIsFetchingAttendance] = useState(false);
     const [submissions, setSubmissions] = useState([]);
     const [homeworkCompletion, setHomeworkCompletion] = useState(0);
 
@@ -38,6 +40,21 @@ function Profile (): JSX.Element {
                     message.error(`${err.status ? err.status + ': ' : ''}${err.data || err.message}`);
                 })
                 .finally(() => setIsHomeworkLoading(false));
+        }
+    }, [user]);
+
+    useEffect(() => {
+        if (user) {
+            setIsFetchingAttendance(true);
+            frontendApiService.get<HttpResponse<AttendanceDataProps>>('api/attendance')
+                .then(response => {
+                    setAttendanceRecords(response.data.records);
+                    setTotalAttendanceRecords(response.data.totalRecords);
+                })
+                .catch(err => {
+                    message.error(`${err.status ? err.status + ': ' : ''}${err.data || err.message}`);
+                })
+                .finally(() => setIsFetchingAttendance(false));
         }
     }, [user]);
     
@@ -70,8 +87,9 @@ function Profile (): JSX.Element {
                             isLoading: isHomeworkLoading,
                         }}
                         attendanceData={{
-                            records,
-                            totalRecords,
+                            records: attendanceRecords,
+                            totalRecords: totalAttendanceRecords,
+                            isLoading: isFetchingAttendance,
                         }}
                     />
                 </Col>

@@ -35,6 +35,7 @@ function ProfileDataContent (props: ProfileDataContentProps): ReactElement {
                 <AttendanceData 
                     records={props.profileData.attendanceData.records}
                     totalRecords={props.profileData.attendanceData.totalRecords}
+                    isLoading={props.profileData.attendanceData.isLoading}
                 />
             );
         default:
@@ -44,7 +45,7 @@ function ProfileDataContent (props: ProfileDataContentProps): ReactElement {
 
 export type ProfileDataProps = {
     homeworkData: HomeworkTableProps;
-    attendanceData: AttendanceDataProps;
+    attendanceData: AttendanceDataProps & { isLoading: boolean };
 };
 
 export default function ProfileData (props: ProfileDataProps): ReactElement {

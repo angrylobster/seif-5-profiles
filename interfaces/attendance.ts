@@ -28,3 +28,29 @@ export class Attendance {
         this.period = period;
     }
 }
+
+export class AttendanceDataDto {
+    records: {
+        P: Attendance[];
+        L: Attendance[];
+        A: Attendance[];
+        E: Attendance[];
+        EA: Attendance[];
+        SC: Attendance[];
+        H: Attendance[];
+    };
+    totalRecords: number;
+
+    constructor () {
+        this.records = {
+            P: [],
+            L: [],
+            A: [],
+            E: [],
+            EA: [],
+            SC: [],
+            H: [],
+        };
+        this.totalRecords = 0;
+    }
+}
