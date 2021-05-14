@@ -15,17 +15,22 @@ export default function ProfileAvatar ({
     lastName,
 }: ProfileAvatarProps): ReactElement {
     const [initials, setInitials] = useState('');
+    const [avatarColor, setAvatarColor] = useState('');
 
     useEffect(() => {
         const getFirstLetterFromWord = (word: string) => word ? word.substr(0, 1) : '';
         setInitials(getFirstLetterFromWord(firstName) + getFirstLetterFromWord(lastName));
     }, [firstName, lastName]);
 
+    useEffect(() => {
+        setAvatarColor(randomColor({ luminosity: 'dark'}));
+    }, []);
+
     return (
         <>
             {firstName && lastName && 
                 <Avatar
-                    style={{ backgroundColor: randomColor({ luminosity: 'dark' }) }}
+                    style={{ backgroundColor: avatarColor }}
                     icon={initials ? undefined : <UserOutlined />}
                     size={PROFILE_AVATAR_DEFAULT_SIZE}
                 >
