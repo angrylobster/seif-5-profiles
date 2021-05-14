@@ -1,7 +1,7 @@
 import { LogoutOutlined } from '@ant-design/icons';
-import { Button, Col, Dropdown, Menu, message, PageHeader, Row, Tooltip, Typography } from 'antd';
+import { Button, message } from 'antd';
 import Layout from 'antd/lib/layout';
-import { Content, Header } from 'antd/lib/layout/layout';
+import { Content } from 'antd/lib/layout/layout';
 import Router from 'next/router';
 import React, { PropsWithChildren, ReactNode } from 'react';
 import { UserProps } from '../../interfaces/auth';

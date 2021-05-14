@@ -89,7 +89,14 @@ export default function ProfileDetails (props: ProfileDetailsProps): ReactElemen
                     
                             <ProfileDetailsAttribute description="GitHub Handle" show={!!props.user.githubHandle}>
                                 <GithubOutlined style={{ marginRight: '4px' }} />
-                                {props.user.githubHandle}
+                                <a 
+                                    href={`https://github.com/${props.user.githubHandle}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{ color: 'inherit' }}
+                                >
+                                    {props.user.githubHandle}
+                                </a>
                             </ProfileDetailsAttribute>
                         </Col>
                     </Row>
